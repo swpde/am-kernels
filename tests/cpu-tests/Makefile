@@ -14,8 +14,15 @@ all: $(addprefix Makefile., $(ALL))
 
 $(ALL): %: Makefile.%
 
+
+### AM_HOME 这里是环境变量  
+### export NEMU_HOME=/home/swp/Documents/ics2025/nemu
+### export AM_HOME=/home/swp/Documents/ics2025/abstract-machine
+
+
 Makefile.%: tests/%.c latest
 	@/bin/echo -e "NAME = $*\nSRCS = $<\ninclude $${AM_HOME}/Makefile" > $@
+### 由 abstract-machine/Makefile 接管
 	@if make -s -f $@ ARCH=$(ARCH) $(MAKECMDGOALS); then \
 		printf "[%14s] $(COLOR_GREEN)PASS$(COLOR_NONE)\n" $* >> $(RESULT); \
 	else \
